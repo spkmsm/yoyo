@@ -1,15 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import React, {useState} from 'react';
 import {Colors} from '../../component/helpers/colors';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/Fontisto';
+import CustomButton from './CustomButton';
 
 const Login = ({navigation}) => {
   const [status, setStatus] = useState('organization');
@@ -39,8 +33,8 @@ const Login = ({navigation}) => {
           onPress={() => {
             setStatus('organization');
           }}>
-          <Icon
-            name="office-building-marker-outline"
+          <Image
+            source={require('../../assets/images/organization.png')}
             color={status === 'organization' ? Colors.primaryTextColor : 'gray'}
             size={50}
           />
@@ -53,44 +47,24 @@ const Login = ({navigation}) => {
           onPress={() => {
             setStatus('Employee');
           }}>
-          <Icons
-            name="user-secret"
-            size={50}
+          <Image
+            source={require('../../assets/images/employee.png')}
             color={status === 'Employee' ? Colors.primaryTextColor : 'gray'}
+            size={50}
           />
+
           <Text style={{fontWeight: 'bold', color: 'gray'}}>
             {status === 'Employee' ? status : ''}
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableWithoutFeedback
-        onPress={() =>
-          navigation.navigate('Form', {
-            status: status,
-          })
-        }>
-        <View
-          style={{
-            backgroundColor: Colors.primaryBtnColor,
-            padding: 12,
-            borderRadius: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 10,
-            elevation: 2,
-            width: '60%',
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 'bold',
-            }}>
-            Continue
-          </Text>
-        </View>
-      </TouchableWithoutFeedback>
+      <CustomButton
+        width={'60%'}
+        borderRadius={10}
+        forWhat="Continue"
+        goto="Form"
+        withData={status}
+      />
     </View>
   );
 };

@@ -1,13 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
 import React from 'react';
 import {Colors} from '../../component/helpers/colors';
+import CustomButton from './CustomButton';
 
 const Login = ({navigation}) => {
   return (
@@ -49,32 +44,12 @@ const Login = ({navigation}) => {
         }}>
         Change Number?
       </Text>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          navigation.navigate('StatusChecking');
-        }}>
-        <View
-          style={{
-            backgroundColor: Colors.primaryBtnColor,
-            padding: 12,
-            borderRadius: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 10,
-            elevation: 2,
-            width: '80%',
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 'bold',
-            }}>
-            Verify
-          </Text>
-        </View>
-      </TouchableWithoutFeedback>
+      <CustomButton
+        width={'80%'}
+        borderRadius={10}
+        forWhat="Verify"
+        goto="StatusChecking"
+      />
     </View>
   );
 };
