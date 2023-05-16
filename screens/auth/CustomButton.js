@@ -4,12 +4,11 @@ import React from 'react';
 import {Colors} from '../../component/helpers/colors';
 import {useNavigation} from '@react-navigation/native';
 
-const CustomButton = ({width, borderRadius, forWhat, goto, withData}) => {
+const CustomButton = ({width, borderRadius, forWhat, goto}) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => navigation.navigate(goto, {status: withData})}>
+    <TouchableWithoutFeedback onPress={() => navigation.navigate(goto)}>
       <View
         style={{
           backgroundColor: Colors.primaryBtnColor,

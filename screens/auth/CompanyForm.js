@@ -8,13 +8,15 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import DocumentPicker from 'react-native-document-picker';
 import {Colors} from '../../component/helpers/colors';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
 
-const Form = ({route, navigation}) => {
-  const {status} = route.params;
+const Form = ({navigation}) => {
+  const [status] = useState(useSelector(data => data.user.status));
+
   const handleDocumentSelection = async () => {
     try {
       await DocumentPicker.pickSingle({
@@ -62,7 +64,7 @@ const Form = ({route, navigation}) => {
           </View>
 
           <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('ProfileHome', {data: status})}>
+            onPress={() => navigation.navigate('ProfileHome')}>
             <View
               style={{
                 backgroundColor: Colors.primaryBtnColor,
@@ -93,7 +95,7 @@ const Form = ({route, navigation}) => {
         <View style={styles.employeeContainer}>
           <TextInput style={styles.inputBox} placeholder="Enter Company Code" />
           <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('EmployeeForm', {data: status})}>
+            onPress={() => navigation.navigate('EmployeeForm')}>
             <View
               style={{
                 backgroundColor: Colors.primaryBtnColor,

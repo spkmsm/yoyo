@@ -2,11 +2,22 @@
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import React, {useState} from 'react';
 import {Colors} from '../../component/helpers/colors';
-import Icons from 'react-native-vector-icons/Fontisto';
+import {useSelector, useDispatch} from 'react-redux';
 import CustomButton from './CustomButton';
+import {changeUserStatus} from '../../redux/slices/UserSlice';
 
-const Login = ({navigation}) => {
-  const [status, setStatus] = useState('organization');
+const Login = () => {
+  const [status, setStatus] = useState(useSelector(data => data.user.status));
+  const dispatch = useDispatch();
+  const handlePress = data => {
+    try {
+      setStatus(data);
+      dispatch(changeUserStatus({status: data}));
+    } catch (err) {
+      console.log(err, 'l');
+    }
+  };
+  console.log(useSelector(data => data.user.status));
   return (
     <View
       style={{
@@ -31,7 +42,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={styles.box}
           onPress={() => {
-            setStatus('organization');
+            handlePress('organization');
           }}>
           <Image
             source={require('../../assets/images/organization.png')}
@@ -45,7 +56,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={styles.box}
           onPress={() => {
-            setStatus('Employee');
+            handlePress('Employee');
           }}>
           <Image
             source={require('../../assets/images/employee.png')}
@@ -63,7 +74,6 @@ const Login = ({navigation}) => {
         borderRadius={10}
         forWhat="Continue"
         goto="Form"
-        withData={status}
       />
     </View>
   );

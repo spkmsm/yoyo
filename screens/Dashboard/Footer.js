@@ -4,9 +4,11 @@ import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Iconf from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const Footer = () => {
-  const route = useRoute();
+  const route = useSelector(data => data.user.status);
+
   const [, setCurrentTouched] = useState();
 
   const navigation = useNavigation();
@@ -20,15 +22,11 @@ const Footer = () => {
         <TouchableWithoutFeedback
           onPress={() => {
             setCurrentTouched('Home');
-            navigation.navigate('ProfileHome', {data: route.params.data});
+            navigation.navigate('ProfileHome');
           }}>
           <View style={styles.footerBox}>
             <Icon
-              name={
-                route.params.data === 'organization'
-                  ? 'ios-home'
-                  : 'camera-sharp'
-              }
+              name={route === 'organization' ? 'ios-home' : 'camera-sharp'}
               size={15}
               color={route.name === 'ProfileHome' ? '#01a4ec' : 'gray'}
             />
@@ -51,7 +49,7 @@ const Footer = () => {
         <TouchableWithoutFeedback
           onPress={() => {
             setCurrentTouched('Help');
-            navigation.navigate('Helperdesk', {data: route.params.data});
+            navigation.navigate('Helperdesk');
           }}>
           <View style={styles.footerBox}>
             <Iconf
@@ -65,7 +63,7 @@ const Footer = () => {
         <TouchableWithoutFeedback
           onPress={() => {
             setCurrentTouched('Settings');
-            navigation.navigate('SettingsScreen', {data: route.params.data});
+            navigation.navigate('SettingsScreen');
           }}>
           <View style={styles.footerBox}>
             <Icon

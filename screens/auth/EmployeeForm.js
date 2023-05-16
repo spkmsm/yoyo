@@ -11,12 +11,8 @@ import {
 import React from 'react';
 import DocumentPicker from 'react-native-document-picker';
 import {Colors} from '../../component/helpers/colors';
-import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useRoute} from '@react-navigation/native';
 
-const EmployeeForm = ({route, navigation}) => {
-  const router = useRoute();
-
+const EmployeeForm = ({navigation}) => {
   const handleDocumentSelection = async () => {
     try {
       await DocumentPicker.pickSingle({
@@ -49,9 +45,7 @@ const EmployeeForm = ({route, navigation}) => {
         </View>
 
         <TouchableWithoutFeedback
-          onPress={() =>
-            navigation.navigate('ProfileHome', {data: router.params.data})
-          }>
+          onPress={() => navigation.navigate('ProfileHome')}>
           <View
             style={{
               backgroundColor: Colors.primaryBtnColor,

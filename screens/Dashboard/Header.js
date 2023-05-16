@@ -3,10 +3,11 @@ import {View, Text} from 'react-native';
 import React from 'react';
 import Icons from 'react-native-vector-icons/Ionicons';
 import {Avatar} from 'react-native-paper';
-import {useRoute} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const Header = () => {
-  const router = useRoute();
+  const router = useSelector(data => data.user.status);
+
   return (
     <View
       style={{
@@ -19,9 +20,7 @@ const Header = () => {
         backgroundColor: 'white',
       }}>
       <Text style={{fontWeight: 'bold'}}>
-        {router.params.data === 'organization'
-          ? 'Organization Name'
-          : 'Employee Name'}
+        {router === 'organization' ? 'Organization Name' : 'Employee Name'}
       </Text>
       <View style={{flexDirection: 'row', gap: 10}}>
         <Icons name="ios-notifications-outline" size={20} />

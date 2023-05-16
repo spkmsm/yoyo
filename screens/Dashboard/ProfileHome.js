@@ -5,19 +5,19 @@ import Header from './Header';
 import {Colors} from '../../component/helpers/colors';
 import Footer from './Footer';
 import Company from './company';
-import {useRoute} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 import Staff from './staff';
 
 const ProfileHome = () => {
-  const route = useRoute();
+  const route = useSelector(data => data.user.status);
 
   return (
     <View style={{backgroundColor: Colors.primaryBgColor, minHeight: '100%'}}>
-      <Header who={route.params.data} />
+      <Header />
       <ScrollView style={{height: '70%'}} showsVerticalScrollIndicator={false}>
-        {route.params.data === 'organization' ? <Company /> : <Staff />}
+        {route === 'organization' ? <Company /> : <Staff />}
       </ScrollView>
-      <Footer who={route.params.data} />
+      <Footer />
     </View>
   );
 };
