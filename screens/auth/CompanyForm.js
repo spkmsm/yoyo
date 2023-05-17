@@ -13,9 +13,20 @@ import DocumentPicker from 'react-native-document-picker';
 import {Colors} from '../../component/helpers/colors';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
+import {createUser} from '../../component/helpers/apiHelper';
 
 const Form = ({navigation}) => {
-  const [status] = useState(useSelector(data => data.user.status));
+  const {status, phoneNumber} = useSelector(data => data.user);
+  const initialValue = {
+    status: status,
+    phoneNumber: phoneNumber,
+    name: '',
+    email: '',
+    address: '',
+    pic: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80',
+  };
+
+  const [formData, setFormData] = useState(initialValue);
 
   const handleDocumentSelection = async () => {
     try {
@@ -23,6 +34,19 @@ const Form = ({navigation}) => {
         presentationStyle: 'fullScreen',
       });
     } catch (err) {}
+  };
+
+  const handleInputChange = (e, field) => {
+    setFormData(pre => ({...pre, [field]: e}));
+  };
+
+  const handleEmployeeFormSubmit = async () => {
+    try {
+      await createUser(formData);
+      navigation.navigate('ProfileHome');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -33,11 +57,13 @@ const Form = ({navigation}) => {
             label="Company Name"
             style={styles.inputBox}
             placeholder="Company Name"
+            onChangeText={e => handleInputChange(e, 'name')}
           />
           <TextInput
             label="Email Id"
             placeholder="Email Id"
             style={styles.inputBox}
+            onChangeText={e => handleInputChange(e, 'email')}
           />
           <TextInput
             label="Address"
@@ -45,6 +71,7 @@ const Form = ({navigation}) => {
             style={styles.inputBox}
             multiline={true}
             numberOfLines={2}
+            onChangeText={e => handleInputChange(e, 'address')}
           />
           <View
             style={{
@@ -63,8 +90,7 @@ const Form = ({navigation}) => {
             </TouchableWithoutFeedback>
           </View>
 
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('ProfileHome')}>
+          <TouchableWithoutFeedback onPress={handleEmployeeFormSubmit}>
             <View
               style={{
                 backgroundColor: Colors.primaryBtnColor,

@@ -1,23 +1,38 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import React, {useState} from 'react';
 import {Colors} from '../../component/helpers/colors';
 import {useSelector, useDispatch} from 'react-redux';
-import CustomButton from './CustomButton';
 import {changeUserStatus} from '../../redux/slices/UserSlice';
 
-const Login = () => {
-  const [status, setStatus] = useState(useSelector(data => data.user.status));
+const Login = ({route, navigation}) => {
+  const [status, setStatus] = useState('organization');
+  const currentFormDatas = useSelector(data => data);
+  const [dummy, setDummy] = useState(false);
   const dispatch = useDispatch();
+  console.log(currentFormDatas);
   const handlePress = data => {
     try {
       setStatus(data);
-      dispatch(changeUserStatus({status: data}));
     } catch (err) {
       console.log(err, 'l');
     }
   };
-  console.log(useSelector(data => data.user.status));
+
+  const handleStatusChange = () => {
+    dispatch(
+      changeUserStatus({phoneNumber: route.params.phone, status: status}),
+    );
+    setDummy(!dummy);
+    navigation.navigate('Form');
+  };
   return (
     <View
       style={{
@@ -69,12 +84,30 @@ const Login = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <CustomButton
-        width={'60%'}
-        borderRadius={10}
-        forWhat="Continue"
-        goto="Form"
-      />
+
+      <TouchableWithoutFeedback onPress={handleStatusChange}>
+        <View
+          style={{
+            backgroundColor: Colors.primaryBtnColor,
+            padding: 12,
+            borderRadius: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 10,
+            elevation: 2,
+            width: '60%',
+          }}>
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              fontWeight: 'bold',
+            }}>
+            Continue
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 };

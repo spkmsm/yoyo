@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialValues = {
   status: 'organization',
+  phoneNumber: '',
 };
 
 const userSlice = createSlice({
@@ -10,6 +11,7 @@ const userSlice = createSlice({
   reducers: {
     changeUserStatus: (state, action) => {
       state.status = action.payload.status;
+      state.phoneNumber = action.payload.phoneNumber;
     },
   },
 });

@@ -1,9 +1,22 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, Text, TouchableWithoutFeedback} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Colors} from '../../component/helpers/colors';
 import PhoneInput from 'react-native-phone-number-input';
+import {sendOTP} from '../../component/helpers/apiHelper';
+
 const Login = ({navigation}) => {
+  const [phoneNumber, setPhoneNumber] = useState();
+  const handlePhonenumberSubmit = async () => {
+    try {
+      const result = await sendOTP(phoneNumber);
+      console.log(result.data);
+      navigation.navigate('OTP', {otp: result.data, phoneNumber: phoneNumber});
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <View
       style={{
@@ -21,6 +34,7 @@ const Login = ({navigation}) => {
             backgroundColor: 'white',
             borderRadius: 10,
           }}
+          onChangeText={e => setPhoneNumber(e)}
           containerStyle={{borderRadius: 10, height: 50, elevation: 2}}
           codeTextStyle={{color: 'black'}}
           flagButtonStyle={{color: 'black'}}
@@ -28,7 +42,7 @@ const Login = ({navigation}) => {
           textInputProps={{placeholderTextColor: 'gray'}}
         />
       </View>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate('OTP')}>
+      <TouchableWithoutFeedback onPress={handlePhonenumberSubmit}>
         <View
           style={{
             backgroundColor: Colors.primaryBtnColor,
